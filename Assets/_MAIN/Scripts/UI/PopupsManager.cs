@@ -28,15 +28,19 @@ namespace AliasGPT
         
         public async UniTask<bool> ShowPopup<T>() where T : BaseWindow
         {
+            Debug.Log($"Showing popup {typeof(T).Name}");
             var tcs = new UniTaskCompletionSource<bool>();
+
+            var instantiated = await HandleIntatntiatedPopupLoad<T>(tcs);
+            if(instantiated)
+                return true;
             
-            await HandleIntatntiatedPopupLoad<T>(tcs);
             HandleAsyncPopupLoad<T>(tcs);
 
             return await tcs.Task;
         }
 
-        private async Task HandleIntatntiatedPopupLoad<T>(UniTaskCompletionSource<bool> tcs) where T :  BaseWindow
+        private async UniTask<bool> HandleIntatntiatedPopupLoad<T>(UniTaskCompletionSource<bool> tcs) where T :  BaseWindow
         {
             var type = typeof(T);
             
@@ -44,7 +48,11 @@ namespace AliasGPT
             {
                 await ShowLogic(windowInfo);
                 tcs.TrySetResult(true);
+
+                return true;
             }
+
+            return false;
         }
 
         private void HandleAsyncPopupLoad<T>(UniTaskCompletionSource<bool> tcs) where T : BaseWindow
@@ -80,6 +88,8 @@ namespace AliasGPT
 
         public async UniTask<bool> HidePopup<T>(T popup) where T : BaseWindow
         {
+            Debug.Log($"Hiding popup {popup.gameObject.name}");
+
             var tcs = new UniTaskCompletionSource<bool>();
             
             if(TryGetInstantiated(popup.GetType(), out var windowInfo))
@@ -105,7 +115,6 @@ namespace AliasGPT
             if (!contains)
             {
                 info = null;
-                Debug.LogError("attempt to get not instantiated popup!");
                 return false;
             }
             
