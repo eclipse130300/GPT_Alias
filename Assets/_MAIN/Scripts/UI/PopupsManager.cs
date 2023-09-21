@@ -13,9 +13,7 @@ namespace AliasGPT
     {
         private const string BaePath = "Windows/";
 
-        [SerializeField] 
-        private Transform _uiRoot;
-
+        private readonly Transform _uiRoot;
         private readonly IInstantiator _instantiator;
 
         public PopupsManager(IInstantiator instantiator, Transform uiRoot)

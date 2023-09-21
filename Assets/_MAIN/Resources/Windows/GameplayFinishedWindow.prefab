@@ -930,7 +930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6276782622572536700, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
       propertyPath: m_Name
-      value: GameFinishedWindow
+      value: GameplayFinishedWindow
       objectReference: {fileID: 0}
     - target: {fileID: 6276782622572536703, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
       propertyPath: m_Pivot.x

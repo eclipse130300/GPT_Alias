@@ -4,8 +4,8 @@ using Zenject;
 
 public class MainInstaller : MonoInstaller
 {
-    [SerializeField]
-    private LoadingCurtain _loadingCurtain;
+    /*[SerializeField]
+    private LoadingCurtain _loadingCurtain;*/
     
     [SerializeField]
     private Transform _uiRoot;
@@ -17,5 +17,8 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<Transform>().FromInstance(_uiRoot).AsSingle().WhenInjectedInto<PopupsManager>().NonLazy();
         Container.Bind<PopupsManager>().AsSingle().NonLazy();
+        
+        Container.Bind<GameContext>().AsSingle().NonLazy();
+        Container.Bind<StartGameCommand>().AsSingle().NonLazy();
     }
 }
