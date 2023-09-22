@@ -5,15 +5,19 @@ public class GameplayState : IState
 {
     private readonly GameContext _gameContext;
     private readonly StateMachine _stateMachine;
+    private readonly WordsProvider _wordsProvider;
 
-    public GameplayState(GameContext gameContext, StateMachine stateMachine)
+    public GameplayState(GameContext gameContext, StateMachine stateMachine, WordsProvider wordsProvider)
     {
         _gameContext = gameContext;
         _stateMachine = stateMachine;
+        _wordsProvider = wordsProvider;
     }
 
     public void Enter()
     {
+        _wordsProvider.SetNextWord();
+        
         UpdateTime();
     }
 

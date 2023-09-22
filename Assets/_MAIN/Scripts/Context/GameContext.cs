@@ -34,17 +34,19 @@ namespace AliasGPT
         public ReactiveProperty<uint> RoundTimeLeft { get; } = new(60);
         
         public ReactiveProperty<uint> MaxRounds { get; } = new(12);
-        
+
+        public ReactiveProperty<bool> IsLastRound { get; } = new(false);
+
         public ReactiveProperty<uint> CurrentRound { get; } = new(1);
 
-        public ReactiveCollection<string> AllWords { get; } = new();
-        
-        public ReactiveCollection<string> UsedWords { get; } = new();
-        
         public List<string> AnsweredThisRound { get; } = new();
-        
+
         public List<string> SkippedThisRound { get; } = new();
-        
+
         public ReactiveProperty<string> CurrentWord { get; } = new();
+
+        //public ReactiveCollection<string> AllWords { get; } = new();
+
+        //public ReactiveCollection<string> UsedWords { get; } = new();
     }
 }

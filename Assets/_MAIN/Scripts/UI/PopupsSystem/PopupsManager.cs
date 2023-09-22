@@ -44,6 +44,9 @@ namespace AliasGPT
             
             if (TryGetInstantiated(type, out var windowInfo))
             {
+                //set as last sibling
+                windowInfo.GameObject.transform.SetAsLastSibling();
+                
                 await ShowLogic(windowInfo);
                 tcs.TrySetResult(true);
 

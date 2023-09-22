@@ -18,12 +18,14 @@ public class StartGameCommand
     private readonly GameContext _gameContext;
     private readonly PopupsManager _popupsManager;
     private readonly GameplayController _gameplayController;
+    private readonly WordsProvider _wordsProvider;
 
-    public StartGameCommand(GameContext gameContext, PopupsManager popupsManager, GameplayController gameplayController)
+    public StartGameCommand(GameContext gameContext, PopupsManager popupsManager, GameplayController gameplayController, WordsProvider wordsProvider)
     {
         _gameContext = gameContext;
         _popupsManager = popupsManager;
         _gameplayController = gameplayController;
+        _wordsProvider = wordsProvider;
     }
 
     public async UniTask Execute()
@@ -32,10 +34,8 @@ public class StartGameCommand
         var sendGptRequest = await SendGPTRequest(_gameContext.CommonThemeName.Value);
         //parse words
         var result = TryParseMessage(sendGptRequest.Content);
-        //set words to game context
-        _gameContext.AllWords.Clear();
-        _gameContext.AllWords.AddRange(result);
-
+        //set words to provider
+        _wordsProvider.Initialize(result);
         //open gameplay window
         await _popupsManager.ShowPopup<GamePreparationWindow>();
         

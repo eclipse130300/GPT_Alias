@@ -23,5 +23,6 @@ public class MainInstaller : MonoInstaller
 
         Container.Bind<GameBootstrapper>().AsSingle().NonLazy();
         Container.Bind<GameplayController>().AsSingle().NonLazy();
+        Container.Bind<WordsProvider>().AsSingle().NonLazy();
     }
 }

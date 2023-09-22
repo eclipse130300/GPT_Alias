@@ -14,7 +14,7 @@ public class InitGameplayState : IState
     public void Enter()
     {
         _gameContext.CurrentRound.Value = 1;
-        _gameContext.UsedWords.Clear();
+        _gameContext.IsLastRound.Value = false;
         
         _stateMachine.EnterState<RoundPreparationState>();
     }

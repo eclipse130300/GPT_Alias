@@ -7,7 +7,7 @@ public class GameplayController
     private readonly StateMachine _stateMachine;
     private readonly PopupsManager _popupsManager;
     
-    public GameplayController(PopupsManager popupsManager, GameContext gameContext)
+    public GameplayController(PopupsManager popupsManager, GameContext gameContext, WordsProvider wordsProvider)
     {
         _popupsManager = popupsManager;
         
@@ -17,8 +17,8 @@ public class GameplayController
         {
             new InitGameplayState(gameContext, _stateMachine),
             new GameDisabledState(),
-            new RoundPreparationState(),
-            new GameplayState(gameContext, _stateMachine),
+            new RoundPreparationState(gameContext, popupsManager),
+            new GameplayState(gameContext, _stateMachine, wordsProvider),
             new RoundFinishedState(),
         };
         
@@ -31,7 +31,7 @@ public class GameplayController
         _stateMachine.EnterState<InitGameplayState>();
     }
 
-    public void ExitGameplayLoop()
+    public void QuitGameplayLoop()
     {
         _stateMachine.EnterState<GameDisabledState>();
         _popupsManager.ShowPopup<MainWindow>().Forget();
