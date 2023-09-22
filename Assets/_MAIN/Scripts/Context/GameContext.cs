@@ -31,6 +31,8 @@ namespace AliasGPT
         
         public ReactiveProperty<uint> RoundTime { get; } = new(60);
         
+        public ReactiveProperty<uint> RoundTimeLeft { get; } = new(60);
+        
         public ReactiveProperty<uint> MaxRounds { get; } = new(12);
         
         public ReactiveProperty<uint> CurrentRound { get; } = new(1);

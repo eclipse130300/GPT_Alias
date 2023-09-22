@@ -20,5 +20,8 @@ public class MainInstaller : MonoInstaller
         
         Container.Bind<GameContext>().AsSingle().NonLazy();
         Container.Bind<StartGameCommand>().AsSingle().NonLazy();
+
+        Container.Bind<GameBootstrapper>().AsSingle().NonLazy();
+        Container.Bind<GameplayController>().AsSingle().NonLazy();
     }
 }

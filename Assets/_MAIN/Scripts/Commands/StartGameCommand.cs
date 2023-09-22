@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenAI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartGameCommand
@@ -14,22 +15,33 @@ public class StartGameCommand
     private OpenAIApi openai 
         = new OpenAIApi("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");
 
-    private GameContext _gameContext;
+    private readonly GameContext _gameContext;
+    private readonly PopupsManager _popupsManager;
+    private readonly GameplayController _gameplayController;
 
-    public StartGameCommand(GameContext gameContext)
+    public StartGameCommand(GameContext gameContext, PopupsManager popupsManager, GameplayController gameplayController)
     {
         _gameContext = gameContext;
+        _popupsManager = popupsManager;
+        _gameplayController = gameplayController;
     }
 
     public async UniTask Execute()
     {
         //get gpt words
-        var result = await SendGPTRequest(_gameContext.CommonThemeName.Value);
+        var sendGptRequest = await SendGPTRequest(_gameContext.CommonThemeName.Value);
         //parse words
-        var isParsed = TryParseMessage(result.Content);
+        var result = TryParseMessage(sendGptRequest.Content);
         //set words to game context
+        _gameContext.AllWords.Clear();
+        _gameContext.AllWords.AddRange(result);
 
         //open gameplay window
+        await _popupsManager.ShowPopup<GamePreparationWindow>();
+        
+        _gameplayController.StartGameplayLoop();
+        
+        //TODO: ALSO SCREEN TO HIDE LOADING!
     }
 
     private async UniTask<ChatMessage> SendGPTRequest(string messageText)
@@ -67,7 +79,7 @@ public class StartGameCommand
         return ChatMessage.Empty;
     }
 
-    private bool TryParseMessage(string message)
+    private List<string> TryParseMessage(string message)
     {
         //ParseResult result = new ParseResult();
         JObject jsonObject = new JObject();
@@ -100,6 +112,6 @@ public class StartGameCommand
             }
         }
 
-        return results != null;
+        return results;
     }
 }
