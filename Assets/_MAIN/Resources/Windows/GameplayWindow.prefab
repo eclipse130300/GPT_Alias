@@ -1171,6 +1171,10 @@ PrefabInstance:
       propertyPath: m_enableAutoSizing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1968745820386985219, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1968745820386985220, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
       propertyPath: m_SizeDelta.x
       value: 734.9
@@ -1185,7 +1189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1968745820386985221, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
       propertyPath: m_text
-      value: Finished
+      value: PLAY!
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968745821571087589, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1968745822251735922, guid: 9f177d3c36a69074782366bbcf0ae0ff, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1417,7 +1425,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7728258161708491875, guid: 3e5d853083b4f92438bb77fbb3d5d710, type: 3}
       propertyPath: m_text
-      value: "\u0444\u044B\u0432\u0444\u044B\u0432\u044B\u0432\u0444"
+      value: "\u0444\u044B\u0432\u0444\u044B\u0432\u0426\u0446\u0424\u0412\u0410"
       objectReference: {fileID: 0}
     - target: {fileID: 7728258161708491875, guid: 3e5d853083b4f92438bb77fbb3d5d710, type: 3}
       propertyPath: m_fontSize

@@ -13,6 +13,7 @@ namespace AliasGPT
             CommonThemeName.Value = defaultSettings.Theme;
             RoundTime.Value = defaultSettings.RoundTime;
             MaxRounds.Value = defaultSettings.MaxRounds;
+            WordsAmount.Value = defaultSettings.WordsAmount;
         }
         
         public GameContext(GameSettings gameSettings)
@@ -21,6 +22,7 @@ namespace AliasGPT
             CommonThemeName.Value = gameSettings.Theme;
             RoundTime.Value = gameSettings.RoundTime;
             MaxRounds.Value = gameSettings.MaxRounds;
+            WordsAmount.Value = gameSettings.WordsAmount;
         }
 
         public ReactiveProperty<GameMode> SelectedGameMode { get; } = new(GameMode.SimpleTeams);

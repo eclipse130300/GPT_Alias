@@ -17,5 +17,5 @@ public class GameSettings
         WordsAmount = wordsAmount;
     }
     
-    public static GameSettings Default => new(GameMode.SimpleTeams, "Общая тема", 60, 12, 40);
+    public static GameSettings Default => new(GameMode.SimpleTeams, "Общая тема", 60, 4, 20);
 }

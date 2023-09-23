@@ -16,14 +16,12 @@ public class StartGameCommand
         = new OpenAIApi("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");
 
     private readonly GameContext _gameContext;
-    private readonly PopupsManager _popupsManager;
     private readonly GameplayController _gameplayController;
     private readonly WordsProvider _wordsProvider;
 
-    public StartGameCommand(GameContext gameContext, PopupsManager popupsManager, GameplayController gameplayController, WordsProvider wordsProvider)
+    public StartGameCommand(GameContext gameContext, GameplayController gameplayController, WordsProvider wordsProvider)
     {
         _gameContext = gameContext;
-        _popupsManager = popupsManager;
         _gameplayController = gameplayController;
         _wordsProvider = wordsProvider;
     }
@@ -51,7 +49,11 @@ public class StartGameCommand
 
     private async UniTask<ChatMessage> SendGPTRequest(string messageText)
     {
-        var tunedRequestMessage = $"Imagine I am playing game alias. Give me 10 words for the topic {messageText} as an array of string in JSON format with language ru-RU";
+        var wordsAmount = _gameContext.WordsAmount.Value;
+        
+        Debug.Log($"Making GPT request with message - {messageText} and words amount - {wordsAmount}");
+        
+        var tunedRequestMessage = $"Imagine I am playing game alias. Give me {wordsAmount} words for the topic {messageText} as an array of string in JSON format with language ru-RU";
 
         List<ChatMessage> myMessages = new List<ChatMessage>();
 
@@ -102,6 +104,8 @@ public class StartGameCommand
         catch (JsonException e)
         {
             Debug.Log(e);
+            ErrorController.Instance.ShowError();
+            return null;
         }
 
         if (!jsonObject.HasValues)
@@ -112,6 +116,11 @@ public class StartGameCommand
         // Get the property names dynamically
         foreach (var property in jsonObject.Properties())
         {
+            if (!property.HasValues)
+            {
+                ErrorController.Instance.ShowError();
+                break;
+            }
             JArray jsonArray = (JArray)property.Value;
 
             foreach (var value in jsonArray)
