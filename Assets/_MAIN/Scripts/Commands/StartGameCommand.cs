@@ -34,10 +34,15 @@ public class StartGameCommand
         var sendGptRequest = await SendGPTRequest(_gameContext.CommonThemeName.Value);
         //parse words
         var result = TryParseMessage(sendGptRequest.Content);
+        
+        if(result == null)
+        {
+            Debug.LogError("GPT3 returned null");
+            return;
+        }
+        
         //set words to provider
         _wordsProvider.Initialize(result);
-        //open gameplay window
-        await _popupsManager.ShowPopup<GamePreparationWindow>();
         
         _gameplayController.StartGameplayLoop();
         
@@ -97,9 +102,12 @@ public class StartGameCommand
         catch (JsonException e)
         {
             Debug.Log(e);
-            throw;
         }
 
+        if (!jsonObject.HasValues)
+        {
+            return null;
+        }
 
         // Get the property names dynamically
         foreach (var property in jsonObject.Properties())

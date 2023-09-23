@@ -1,4 +1,5 @@
-﻿using AliasGPT;
+﻿using System;
+using AliasGPT;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,8 +14,14 @@ public class RoundTimeInputField : MonoBehaviour
     private GameContext _gameContext;
 
     private void Awake() => 
-        _gameContext.RoundTime.Subscribe(OnThemeChanged).AddTo(this);
+        _inputField.onEndEdit.AddListener(OnRoundTimeChanged);
 
-    private void OnThemeChanged(uint time) => 
-        _inputField.text = time.ToString();
+    private void OnDestroy() => 
+        _inputField.onEndEdit.RemoveListener(OnRoundTimeChanged);
+
+    private void OnEnable() => 
+        _inputField.text = _gameContext.RoundTime.Value.ToString();
+
+    private void OnRoundTimeChanged(string roundTime) => 
+        _gameContext.RoundTime.Value = (uint)int.Parse(roundTime);
 }

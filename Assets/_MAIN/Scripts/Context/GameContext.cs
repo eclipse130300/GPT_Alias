@@ -29,6 +29,7 @@ namespace AliasGPT
         
         public ReactiveProperty<string> CommonThemeName { get; } = new("Общая тема");
         
+        public ReactiveProperty<uint> WordsAmount { get; } = new(40);
         public ReactiveProperty<uint> RoundTime { get; } = new(60);
         
         public ReactiveProperty<uint> RoundTimeLeft { get; } = new(60);
@@ -39,9 +40,9 @@ namespace AliasGPT
 
         public ReactiveProperty<uint> CurrentRound { get; } = new(1);
 
-        public List<string> AnsweredThisRound { get; } = new();
+        public ReactiveCollection<string> AnsweredThisRound { get; } = new();
 
-        public List<string> SkippedThisRound { get; } = new();
+        public ReactiveCollection<string> SkippedThisRound { get; } = new();
 
         public ReactiveProperty<string> CurrentWord { get; } = new();
 

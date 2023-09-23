@@ -1,6 +1,7 @@
 ﻿using System;
 using AliasGPT;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +13,13 @@ public class PointsLastRoundText : MonoBehaviour
     [Inject]
     private GameContext _gameContext;
 
-    //make it reactive later!
-    private void OnEnable()
+    private void Awake()
+    {
+        _gameContext.AnsweredThisRound.ObserveCountChanged(true).Subscribe(OnCountChanged).AddTo(this);
+        _gameContext.SkippedThisRound.ObserveCountChanged(true).Subscribe(OnCountChanged).AddTo(this);
+    }
+    
+    private void OnCountChanged(int count)
     {
         var correctWords = _gameContext.AnsweredThisRound.Count;
         var wrongWords = _gameContext.SkippedThisRound.Count;
@@ -21,7 +27,7 @@ public class PointsLastRoundText : MonoBehaviour
         var result = correctWords - wrongWords;
         bool isPositive = result > 0;
         
-        var sign = isPositive ? "+" : "-";
+        var sign = isPositive ? "+" : "";
 
         _text.text = $"{sign}{result}";
     }

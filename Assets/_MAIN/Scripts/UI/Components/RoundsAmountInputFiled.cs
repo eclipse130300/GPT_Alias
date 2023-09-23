@@ -1,4 +1,5 @@
-﻿using AliasGPT;
+﻿using System;
+using AliasGPT;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,8 +14,14 @@ public class RoundsAmountInputFiled : MonoBehaviour
     private GameContext _gameContext;
 
     private void Awake() => 
-        _gameContext.MaxRounds.Subscribe(OnThemeChanged).AddTo(this);
+        _inputField.onEndEdit.AddListener(OnRoundAmountChanged);
 
-    private void OnThemeChanged(uint time) => 
-        _inputField.text = time.ToString();
+    private void OnDestroy() => 
+        _inputField.onEndEdit.RemoveListener(OnRoundAmountChanged);
+
+    private void OnEnable() => 
+        _inputField.text = _gameContext.MaxRounds.Value.ToString();
+
+    private void OnRoundAmountChanged(string maxRounds) => 
+        _gameContext.MaxRounds.Value = (uint)int.Parse(maxRounds);
 }

@@ -1,12 +1,21 @@
-﻿public class RoundFinishedState : IState
+﻿using AliasGPT;
+using Cysharp.Threading.Tasks;
+
+public class RoundFinishedState : IState
 {
-    public void Exit()
+    private readonly PopupsManager _popupsManager;
+
+    public RoundFinishedState(PopupsManager popupsManager)
     {
-        throw new System.NotImplementedException();
+        _popupsManager = popupsManager;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        _popupsManager.ShowPopup<GameplayFinishedWindow>().Forget();
+    }
+
+    public void Exit()
+    {
     }
 }

@@ -14,8 +14,14 @@ public class ThemeInputField : MonoBehaviour
     private GameContext _gameContext;
 
     private void Awake() => 
-        _gameContext.CommonThemeName.Subscribe(OnThemeChanged).AddTo(this);
+        _inputField.onEndEdit.AddListener(OnThemeChanged);
+
+    private void OnDestroy() => 
+        _inputField.onEndEdit.RemoveListener(OnThemeChanged);
+
+    private void OnEnable() => 
+        _inputField.text = _gameContext.CommonThemeName.Value;
 
     private void OnThemeChanged(string themeName) => 
-        _inputField.text = themeName;
+        _gameContext.CommonThemeName.Value = themeName;
 }
